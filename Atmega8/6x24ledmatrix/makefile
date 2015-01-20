@@ -14,7 +14,7 @@ MAIN = test.c
 
 ## If you've split your program into multiple .c / .h files,
 ## include the additional source (in same directory) here
-LOCAL_SOURCE = 74hc595.c 74hc595.h
+LOCAL_SOURCE = 74hc595.c 74hc595.h cd4017.c cd4017.h
 
 ## Here you can link to one more directory (and multiple .c files)
 EXTRA_SOURCE_DIR =

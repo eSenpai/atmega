@@ -83,66 +83,20 @@ void CD4017Init(void){
 
 void CD4017Pulse(void){
     //Send a pulse to the clock
+    _delay_ms(500);
     CD4017_PORT |= 1 << CD4017_SC;
     _delay_ms(500);
     CD4017_PORT &= ~ 1 << CD4017_SC;
 }
 
 int main(void){
-    uint8_t z = 0;
     //Debug
     // DDRC |= 1 << PINC3;
     //PORTC |= 1 << PINC3;
-    CD4017Init();
-    HC595Init();
+    //CD4017Init();
+    //HC595Init();
+  
     while(1){
-	/*HC595SendByte(0b00011000);
-	HC595SendByte(0b00100100);
-	HC595SendByte(0b00100100);
-	HC595SendByte(0b00111100);
-	HC595SendByte(0b00100100);
-	HC595SendByte(0b00100100);*/
-	for(int i = 0; i < 6; i++){
-	    for(int z = 23; z != 0; z--){
-		if(matrix[i][z] == 0){
-		    HC595SendBit0();
-		}else{
-		    HC595SendBit1();
-		}
-	    }
-	    CD4017Pulse();
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*for(uint8_t i = 0; i < 6; i++){
-	    for(z = 0; z < 8; z++){
-		if(matrix[i][z] == 0){
-		    HC595SendBit0();
-		    _delay_ms(250);
-		}else{
-		    HC595SendBit1();
-		    _delay_ms(250);
-		}
-	    }
-	    HC595Latch();
-	    _delay_ms(500);
-	    CD4017Pulse();
-	}
-	/*HC595SendBit1();
-	_delay_ms(500);
-	CD4017Pulse();
-	_delay_ms(500);*/
+    
     }
 }

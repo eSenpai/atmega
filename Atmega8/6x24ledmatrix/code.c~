@@ -84,6 +84,7 @@ void CD4017Init(void){
 void CD4017Pulse(void){
     //Send a pulse to the clock
     CD4017_PORT |= 1 << CD4017_SC;
+    _delay_ms(500);
     CD4017_PORT &= ~ 1 << CD4017_SC;
 }
 
@@ -101,7 +102,16 @@ int main(void){
 	HC595SendByte(0b00111100);
 	HC595SendByte(0b00100100);
 	HC595SendByte(0b00100100);*/
-	
+	for(int i = 0; i < 6; i++){
+	    for(int z = 23; z != 0; z--){
+		if(matrix[i][z] == 0){
+		    HC595SendBit0();
+		}else{
+		    HC595SendBit1();
+		}
+	    }
+	    CD4017Pulse();
+	}
 
 
 
