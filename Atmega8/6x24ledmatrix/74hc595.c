@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "74hc595.h"
+#include "cd4017.h"
 #include "stdint.h"
 
 #define HC595_PORT        PORTB
@@ -8,7 +9,7 @@
 #define HC595_DS_POS      PB0      //Data pin (DS) pin location
 #define HC595_SH_CP_POS   PB1      //Shift Clock (SH_CP) pin location
 #define HC595_ST_CP_POS   PB2      //Store Clock (ST_CP) pin location
-
+ 
 //74HC595 INIT
 void HC595Init(){
     //Make the Data(DS), Shift clock (SH_CP), Store Clock (ST_CP) lines output
@@ -41,23 +42,25 @@ void HC595Latch(){
    _delay_loop_1(1);
 }
 
-/*
-Main High level function to write a single byte to
-Output shift register 74HC595.
 
-Arguments:
-   single byte to write to the 74HC595 IC
+void HC595Write(uint8_t data[]){
+    CD4017Init();
+    for(uint8_t z = 0; z < 24; z++){
+	if(data[z] == 0){
+	    HC595DataLow();
+	}else{
+	    HC595DataHigh();
+	}
+	HC595Pulse();
+	if(z == 8 || z == 16 || z == 24){
+	    HC595Latch();
+	}
+    }
+    //CD4017Pulse();
+    
 
-Returns:
-   NONE
+    /*
 
-Description:
-   The byte is serially transfered to 74HC595
-   and then latched. The byte is then available on
-   output line Q0 to Q7 of the HC595 IC.
-*/
-
-void HC595Write(uint8_t data){
     //Send each 8 bits serially
     //Order is MSB first
     for(uint8_t i=0;i<8;i++){
@@ -76,5 +79,5 @@ void HC595Write(uint8_t data){
     }
     //Now all 8 bits have been transferred to shift register
     //Move them to output latch at one
-    HC595Latch();
+    HC595Latch();*/
 }
